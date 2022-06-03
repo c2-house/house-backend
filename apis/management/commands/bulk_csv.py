@@ -13,9 +13,18 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--path", type=str, help="csv파일 경로 입력")
+        parser.add_argument(
+            "--target",
+            default="신혼부부",
+            choices=["신혼부부", "대학생"],
+            type=str,
+            help="신혼부부 or 대학생",
+        )
 
     def handle(self, *args, **kwargs):
         path = kwargs.get("path")
+        target = kwargs.get("target")
+
         try:
             file_type = self._check_csv_file(path)
             data = self._read_csv(path)
@@ -23,7 +32,7 @@ class Command(BaseCommand):
             logger.error(e)
             raise CommandError(e)
         else:
-            self._create(data, file_type)
+            self._create(data, file_type, target)
         finally:
             logger.info(f"{len(data)}개의 데이터 저장 완료")
 
@@ -37,7 +46,7 @@ class Command(BaseCommand):
         data = pd.read_csv(path)
         return data
 
-    def _create(self, data, file_type):
+    def _create(self, data, file_type, target):
         house_instances = []
 
         def status_to_bool(status):
@@ -58,6 +67,7 @@ class Command(BaseCommand):
                         release_date=i[6],
                         supplier=i[7],
                         link=i[8],
+                        target=target,
                     )
                 )
             MyHome.objects.bulk_create(house_instances)
