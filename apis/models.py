@@ -20,6 +20,7 @@ class MyHome(BaseModel):
     status = models.BooleanField(verbose_name="진행상태")
     region = models.CharField(max_length=10, verbose_name="지역")
     release_date = models.DateField(verbose_name="당첨발표 일자")
+    target = models.CharField(max_length=10, verbose_name="대상자")
 
 
 class StationArea(BaseModel):
