@@ -7,5 +7,5 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY . /app
 
-RUN apt-get update && apt-get install python3-dev default-libmysqlclient-dev build-essential -y
+RUN apt-get update && apt-get install python3-dev build-essential -y
 RUN pip install --upgrade pip && pip install -r requirements.txt
