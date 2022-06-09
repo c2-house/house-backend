@@ -137,3 +137,23 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
+
+# Chromedriver
+CHROME_DRIVER_PATH = "/usr/src/chrome/chromedriver"
+
+# Q
+Q_CLUSTER = {
+    "name": "house",
+    "recycle": 500,
+    "timeout": 60,
+    "compress": True,
+    "save_limit": 250,
+    "queue_limit": 500,
+    "cpu_affinity": 1,
+    "label": "Django Q",
+    "redis": {
+        "host": "redis",
+        "port": 6379,
+        "db": 0,
+    },
+}
