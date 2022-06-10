@@ -2,6 +2,13 @@ from django.conf import settings
 from house_info.my_home import MyHomeDataManager
 from apis.models import MyHome
 
+CHROME_OPTIONS_FOR_CLI = [
+    "headless",
+    "disable-gpu",
+    "no-sandbox",
+    "disable-dev-shm-usage",
+]
+
 
 class MyhomeDataHandler:
     def __init__(self, target, region):
@@ -12,7 +19,11 @@ class MyhomeDataHandler:
 
     def _get_manager(self):
         manager = MyHomeDataManager(
-            self.chromedriver, page=1, types=self.target, region=self.region
+            self.chromedriver,
+            page=1,
+            types=self.target,
+            region=self.region,
+            options=CHROME_OPTIONS_FOR_CLI,
         )
         return manager
 
