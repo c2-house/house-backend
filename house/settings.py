@@ -41,7 +41,9 @@ INSTALLED_APPS = [
 ]
 PROJECT_APPS = ["apis"]
 
-THIRD_PARTY_APPS = ["rest_framework", "django_q"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+]
 
 INSTALLED_APPS += PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -140,20 +142,3 @@ REST_FRAMEWORK = {
 
 # Chromedriver
 CHROME_DRIVER_PATH = "/usr/src/chrome/chromedriver"
-
-# Q
-Q_CLUSTER = {
-    "name": "house",
-    "recycle": 500,
-    "timeout": 60,
-    "compress": True,
-    "save_limit": 250,
-    "queue_limit": 500,
-    "cpu_affinity": 1,
-    "label": "Django Q",
-    "redis": {
-        "host": "redis",
-        "port": 6379,
-        "db": 0,
-    },
-}
