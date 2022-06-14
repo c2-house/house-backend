@@ -159,6 +159,6 @@ CELERY_BEAT_SCHEDULE = {
     },
     "myhome_update": {
         "task": "apis.tasks.myhome_update",
-        "schedule": crontab(minute=0, hour=0, day_of_week="sunday"),
+        "schedule": crontab(minute=0, hour=0, day_of_week="sun"),
     },
 }
