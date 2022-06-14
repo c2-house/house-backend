@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,7 @@ PROJECT_APPS = ["apis"]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "django_celery_beat",
 ]
 
 INSTALLED_APPS += PROJECT_APPS + THIRD_PARTY_APPS
@@ -142,3 +144,21 @@ REST_FRAMEWORK = {
 
 # Chromedriver
 CHROME_DRIVER_PATH = "/usr/src/chrome/chromedriver"
+
+# Celery
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_TIMEZONE = "Asia/Seoul"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 60 * 60
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "apis.tasks.sample_task",
+        "schedule": crontab(minute="*/1"),
+    },
+    "myhome_update": {
+        "task": "apis.tasks.myhome_update",
+        "schedule": crontab(minute=0, hour=0, day_of_week="sunday"),
+    },
+}

@@ -27,7 +27,7 @@ services:
     volumes:
         - ./pgdata:/var/lib/postgresql/data
   redis:
-    image: redis
+    image: redis:alpine
     container_name: house-redis
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
@@ -36,6 +36,26 @@ services:
     volumes:
       - ./redis/:/data
       - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: house-celery
+    command: celery -A house worker -l info
+    volumes:
+      - .:/app
+    depends_on:
+    - redis
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: house-celery-beat
+    command: celery -A house beat -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
 
 volumes:
   pgdata: {}
